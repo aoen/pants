@@ -20,10 +20,6 @@ class PythonBinaryCreate(PythonTask):
   def is_binary(target):
     return isinstance(target, PythonBinary)
 
-  @classmethod
-  def setup_parser(cls, option_group, args, mkflag):
-    super(PythonBinaryCreate, cls).setup_parser(option_group, args, mkflag)
-
   def __init__(self, context, workdir):
     super(PythonBinaryCreate, self).__init__(context, workdir)
     self._distdir = self.context.config.getdefault('pants_distdir')
