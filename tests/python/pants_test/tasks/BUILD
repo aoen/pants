@@ -38,6 +38,7 @@ python_test_suite(
     pants(':jar_create'),
     pants(':jar_publish'),
     pants(':jar_task'),
+    pants(':jaxb_gen'),
     pants(':listtargets'),
     pants(':minimal_cover'),
     pants(':protobuf_gen'),
@@ -256,7 +257,6 @@ python_tests(
   ],
 )
 
-# XXX(pl): Test is broken and not in :all
 python_tests(
   name = 'jar_publish_integration',
   sources = ['test_jar_publish_integration.py'],
@@ -295,6 +295,17 @@ python_tests(
     pants(':base'),
     pants('3rdparty/python/twitter/commons:twitter.common.contextutil'),
     pants('src/python/pants/backend/codegen/tasks:protobuf_gen'),
+  ],
+)
+
+python_tests(
+  name = 'jaxb_gen',
+  sources = ['test_jaxb_gen.py'],
+  dependencies = [
+    pants(':base'),
+    pants('3rdparty/python/twitter/commons:twitter.common.contextutil'),
+    pants('src/python/pants/backend/codegen/tasks:jaxb_gen'),
+    pants('src/python/pants/backend/codegen/targets:java'),
   ],
 )
 
