@@ -33,58 +33,6 @@ python_library(
   )
 )
 
-import urllib
-
-from pants.backend.core.tasks.confluence_publish import ConfluencePublish
-
-
-def confluence_url_builder(page, config):
-  title = config['title']
-  return title, 'https://confluence.twitter.biz/display/%s/%s' % ( 
-    config['space'],
-    urllib.quote_plus(title)
-  )
-confluence = wiki(name='confluence_wiki',
-                        url_builder=confluence_url_builder,
-                        )
-
-class TwitterConfluence(ConfluencePublish):
-  def wiki(self):
-    return confluence
-  def api(self):
-    return 'confluence2'
-
-goal(
-  name='confluence',
-  action=TwitterConfluence,
-  dependencies=['markdown']
-).install().with_description('Publish one or more confluence pages.')
-
-
-page(name='readme',
-  source='README.md',
-  provides=[
-    wiki_artifact(
-      # FIXME(areitz): investigate why '/src/python/pants/BUILD:confluence_wiki' doesn't work
-      wiki=pants('src/python/pants:confluence_wiki'),
-      space='~areitz',
-      title='test_page',
-    ),
-  ],
-)
-
-page(name='readme2',
-  source='README2.md',
-  provides=[
-    wiki_artifact(
-      # FIXME(areitz): investigate why '/src/python/pants/BUILD:confluence_wiki' doesn't work
-      wiki=pants('src/python/pants:confluence_wiki'),
-      space='~areitz',
-      title='test_page2',
-    ),
-  ],
-)
-
 # XXX move into base or thrift
 python_library(
   name = 'binary_util',

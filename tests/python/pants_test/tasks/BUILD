@@ -397,3 +397,12 @@ python_tests(
     pants('tests/python/pants_test:base_test'),
   ]
 )
+
+python_tests(
+  name = 'confluence_publish',
+  sources = ['test_confluence_publish.py'],
+  dependencies = [
+    pants('src/python/pants/backend/core/targets:common'),
+    pants('tests/python/pants_test:base_test'),
+    ]
+)
